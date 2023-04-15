@@ -73,6 +73,7 @@ def draw_player_and_end():
 
 # Verificar colisiones
 def check_collision():
+    #recorremos el array para generar rectangulos y comprobar si colisiona el personaje con los rectangulos
     for i in range(len(maze)):
         for j in range(len(maze[i])):
             if maze[i][j] == 1:
