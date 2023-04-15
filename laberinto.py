@@ -17,7 +17,8 @@ green=(0,255,0)
 #tiempo de captura de datos
 #------------------------------------------------------------------------------------
 intervalo=100
-
+datos=[]
+#------------------------------------------------------------------------------------
 
 
 # Definir variables de movimiento
@@ -130,6 +131,7 @@ while not game_over:
             #el dato y reinicia el tiempo 
             if pygame.time.get_ticks()-tiempo_intervalo>=intervalo:
                 tiempo_intervalo=pygame.time.get_ticks()
+                datos.append([mouse_pos[0],mouse_pos[1]])
                 print(mouse_pos)
             #-----------------------------------------------------------------------------------------------------------------
 
@@ -173,4 +175,8 @@ while not game_over:
 
 # Cerrar Pygame
 pygame.quit()
+#-------------------------------------------------------------------
+
+#ver que hacer con los datos y que devuelva los datos
+print(datos)
 
