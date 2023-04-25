@@ -71,18 +71,24 @@ def laberinto():
                     pygame.draw.rect(screen, green, (j*columnas, i*filas, columnas+1, filas+1))
     # Dibujar el personaje 
     def draw_player_and_end():
-        pygame.draw.circle(screen, blue, (player_pos[0]+player_size//2, player_pos[1]+player_size//2), player_size//2)
+        pygame.draw.circle(screen, blue, (player_pos[0]+player_size, player_pos[1]+player_size), player_size//2)
 
     # Verificar colisiones
     def check_collision():
+        #return False
         #recorremos el array para generar rectangulos y comprobar si colisiona el personaje con los rectangulos
+        circulo_rect = pygame.Rect(target_pos[0]+player_size/2, target_pos[1]+player_size/2, player_size, player_size)
+        circulo2_rect = pygame.Rect(player_pos[0]+player_size/2, player_pos[1]+player_size/2, player_size, player_size)
+        if (circulo2_rect.colliderect(circulo_rect)==False):
+            return True
+        
         for i in range(len(maze)):
             for j in range(len(maze[i])):
                 if maze[i][j] == 1:
                     #creamos un rectangulo en la posicion del muro para comprobar la colision
-                    wall_rect = pygame.Rect(j*columnas, i*filas, columnas, filas)
+                    wall_rect = pygame.Rect(j*columnas, i*filas, columnas+1, filas+1)
                     #creamos un cuadrado en la posicion del personaje
-                    circulo_rect = pygame.Rect(player_pos[0], player_pos[1], player_size, player_size)
+                    circulo_rect = pygame.Rect(target_pos[0]+player_size/2, target_pos[1]+player_size/2, player_size, player_size)
                     #comprobamos si chocan el rectangulo con el cuadrado
                     if wall_rect.colliderect(circulo_rect):
                         return True
@@ -91,6 +97,7 @@ def laberinto():
                     wall_rect = pygame.Rect(j*columnas, i*filas, columnas, filas)
                     if wall_rect.collidepoint(player_pos):
                          return "WIN"
+        return False
                 
     # Loop principal del juego
     game_over = False
@@ -136,7 +143,7 @@ def laberinto():
                     print(mouse_pos)
                 #-----------------------------------------------------------------------------------------------------------------
 
-                target_pos = [mouse_pos[0]-player_size//2, mouse_pos[1]-player_size//2]
+                target_pos = [mouse_pos[0]-player_size, mouse_pos[1]-player_size]
 
                 # Actualizar posición del personaje
                 if target_pos is not None:
@@ -146,10 +153,10 @@ def laberinto():
                     #movimientos mas lentos 
                     x_diff = target_pos[0] - player_pos[0]
                     y_diff = target_pos[1] - player_pos[1]
-                    distance = (x_diff**2 + y_diff**2)**0.5
+                    distance = 1 #(x_diff**2 + y_diff**2)**0.5
                     if distance != 0:
-                        x_move = x_diff / distance * speed
-                        y_move = y_diff / distance * speed
+                        x_move = x_diff #/ distance * speed
+                        y_move = y_diff #/ distance * speed
                         player_pos[0] += x_move
                         player_pos[1] += y_move
 
