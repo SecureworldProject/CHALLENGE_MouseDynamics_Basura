@@ -74,13 +74,12 @@ def laberinto():
         pygame.draw.circle(screen, blue, (player_pos[0]+player_size, player_pos[1]+player_size), player_size//2)
 
     # Verificar colisiones
-    def check_collision():
+     def check_collision():
         #return False
         #recorremos el array para generar rectangulos y comprobar si colisiona el personaje con los rectangulos
         circulo_rect = pygame.Rect(target_pos[0]+player_size/2, target_pos[1]+player_size/2, player_size, player_size)
         circulo2_rect = pygame.Rect(player_pos[0]+player_size/2, player_pos[1]+player_size/2, player_size, player_size)
-        if (circulo2_rect.colliderect(circulo_rect)==False):
-            return True
+        
         
         for i in range(len(maze)):
             for j in range(len(maze[i])):
@@ -88,7 +87,6 @@ def laberinto():
                     #creamos un rectangulo en la posicion del muro para comprobar la colision
                     wall_rect = pygame.Rect(j*columnas, i*filas, columnas+1, filas+1)
                     #creamos un cuadrado en la posicion del personaje
-                    circulo_rect = pygame.Rect(target_pos[0]+player_size/2, target_pos[1]+player_size/2, player_size, player_size)
                     #comprobamos si chocan el rectangulo con el cuadrado
                     if wall_rect.colliderect(circulo_rect):
                         return True
@@ -97,7 +95,11 @@ def laberinto():
                     wall_rect = pygame.Rect(j*columnas, i*filas, columnas, filas)
                     if wall_rect.collidepoint(player_pos):
                          return "WIN"
-        return False
+        if (circulo2_rect.colliderect(circulo_rect)==True):
+            return False
+        else:
+            return True
+                
                 
     # Loop principal del juego
     game_over = False
