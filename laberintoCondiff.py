@@ -115,6 +115,10 @@ def laberinto():
             return False
         else:
             return True"""
+
+
+
+
     # Loop principal del juego
     game_over = False
     #creamos una variable que nos impida movernos hasta que lleguemos al cuadrado de la salida
