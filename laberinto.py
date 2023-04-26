@@ -83,8 +83,10 @@ def laberinto():
         circulo_rect = pygame.Rect(target_pos[0]+player_size/2, target_pos[1]+player_size/2, player_size, player_size)
         circulo2_rect = pygame.Rect(player_pos[0]+player_size/2, player_pos[1]+player_size/2, player_size, player_size)
         
-        
-        for i in range(len(maze)):
+        #if (circulo2_rect.colliderect(circulo_rect)==False):
+        #    print('a')
+        #    return True
+        """ for i in range(len(maze)):
             for j in range(len(maze[i])):
                 if maze[i][j] == 1:
                     #creamos un rectangulo en la posicion del muro para comprobar la colision
@@ -92,17 +94,27 @@ def laberinto():
                     #creamos un cuadrado en la posicion del personaje
                     #comprobamos si chocan el rectangulo con el cuadrado
                     if wall_rect.colliderect(circulo_rect):
+                        print('b')
                         return True
                     #comprobamos si nos chocamos con el cuadrado final para que acabe el bucle
                 if maze[i][j] == 2:
                     wall_rect = pygame.Rect(j*columnas, i*filas, columnas, filas)
                     if wall_rect.collidepoint(player_pos):
                          return "WIN"
+        
+        #else:
+        #    return True
+                """
+        j=int(mouse_pos[0]//columnas)
+        i=int(mouse_pos[1]//filas)
+        if maze[i][j]==1:
+            return True
+        elif maze[i][j]==2:
+            return "WIN"
         if (circulo2_rect.colliderect(circulo_rect)==True):
             return False
         else:
             return True
-                
     # Loop principal del juego
     game_over = False
     #creamos una variable que nos impida movernos hasta que lleguemos al cuadrado de la salida
@@ -122,31 +134,22 @@ def laberinto():
             if mover==False:
                 #coge la posicion del raton 
                 mouse_pos = pygame.mouse.get_pos()
-                #recorremos el array para comprobar si "colisionamos con el cuadrado de entrada al laberinto"
-                for i in range(len(maze)):
-                    for j in range(len(maze[i])):
-                        if maze[i][j] == 3:
-                            wall_rect = pygame.Rect(j*columnas, i*filas, columnas, filas)
-                            #comprobamos si la posicion del raton colisiona con el cuadrado de salida
-                            if wall_rect.collidepoint(mouse_pos):
-                                #-------------------------------------------------------------------------------------------------
-                                #guardamos el tiempo especifico para guardar nuestros datos
-                                tiempo_intervalo=pygame.time.get_ticks()
-                                #-------------------------------------------------------------------------------------------------
-                                #cambiamos la variable mover para que se pueda mover el personaje
-                                mover=True
+                #recorremos el array para comprobar si "colisionamos con el cuadrado de entrada al laberinto
+                if maze[7][0] == 3:
+                    wall_rect = pygame.Rect(0*columnas, 7*filas, columnas, filas)
+                    #comprobamos si la posicion del raton colisiona con el cuadrado de salida
+                    if wall_rect.collidepoint(mouse_pos):
+                        #-------------------------------------------------------------------------------------------------
+                        #guardamos el tiempo especifico para guardar nuestros datos
+                        tiempo_intervalo=pygame.time.get_ticks()
+                        #-------------------------------------------------------------------------------------------------
+                        #cambiamos la variable mover para que se pueda mover el personaje
+                        mover=True
             else:
                 #coge la posicion del raton 
                 mouse_pos = pygame.mouse.get_pos()
-                #-----------------------------------------------------------------------------------------------------------------
-                #si el tiempo actual - el tiempo de la ultima vez que se ha optenido un dato es igual o mayor que el intervalo captura
-                #el dato y reinicia el tiempo 
-                if pygame.time.get_ticks()-tiempo_intervalo>=intervalo:
-                    tiempo_intervalo=pygame.time.get_ticks()
-                    datos.append([mouse_pos[0],mouse_pos[1]])
-                    print(mouse_pos)
-                #-----------------------------------------------------------------------------------------------------------------
-
+                
+                
                 target_pos = [mouse_pos[0]-player_size, mouse_pos[1]-player_size]
 
                 # Actualizar posición del personaje
@@ -175,6 +178,15 @@ def laberinto():
                             y_move = y_diff #/ distance * speed
                             player_pos[0] += x_move
                             player_pos[1] += y_move
+                            #-----------------------------------------------------------------------------------------------------------------
+                #si el tiempo actual - el tiempo de la ultima vez que se ha optenido un dato es igual o mayor que el intervalo captura
+                #el dato y reinicia el tiempo 
+                            if pygame.time.get_ticks()-tiempo_intervalo>=intervalo:
+                                tiempo_intervalo=pygame.time.get_ticks()
+                                datos.append([mouse_pos[0],mouse_pos[1]])
+                                print(mouse_pos)
+                #-----------------------------------------------------------------------------------------------------------------
+
                 
                     
                     screen.fill(white)
