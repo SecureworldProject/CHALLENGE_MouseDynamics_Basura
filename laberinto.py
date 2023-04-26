@@ -74,7 +74,7 @@ def laberinto():
         pygame.draw.circle(screen, blue, (player_pos[0]+player_size, player_pos[1]+player_size), player_size//2)
 
     # Verificar colisiones
-     def check_collision():
+    def check_collision():
         #return False
         #recorremos el array para generar rectangulos y comprobar si colisiona el personaje con los rectangulos
         circulo_rect = pygame.Rect(target_pos[0]+player_size/2, target_pos[1]+player_size/2, player_size, player_size)
