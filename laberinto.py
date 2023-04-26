@@ -74,6 +74,9 @@ def laberinto():
         pygame.draw.circle(screen, blue, (player_pos[0]+player_size, player_pos[1]+player_size), player_size//2)
 
     # Verificar colisiones
+    
+
+
     def check_collision():
         #return False
         #recorremos el array para generar rectangulos y comprobar si colisiona el personaje con los rectangulos
@@ -99,7 +102,6 @@ def laberinto():
             return False
         else:
             return True
-                
                 
     # Loop principal del juego
     game_over = False
@@ -153,14 +155,7 @@ def laberinto():
                     aux=[player_pos[0],player_pos[1]]
                 
                     #movimientos mas lentos 
-                    x_diff = target_pos[0] - player_pos[0]
-                    y_diff = target_pos[1] - player_pos[1]
-                    distance = 1 #(x_diff**2 + y_diff**2)**0.5
-                    if distance != 0:
-                        x_move = x_diff #/ distance * speed
-                        y_move = y_diff #/ distance * speed
-                        player_pos[0] += x_move
-                        player_pos[1] += y_move
+                    
 
                     #comprobamos si hay colision, si hay colision con un muro no se actualiza la posicion del personaje
                     #si colisiona con el cuadrado de salida del laberinto acaba el programa
@@ -171,6 +166,15 @@ def laberinto():
                     elif check_collision() == "WIN":
                         print("¡Ganaste!")
                         game_over = True
+                    else:
+                        x_diff = target_pos[0] - player_pos[0]
+                        y_diff = target_pos[1] - player_pos[1]
+                        distance = 1 #(x_diff**2 + y_diff**2)**0.5
+                        if distance != 0:
+                            x_move = x_diff #/ distance * speed
+                            y_move = y_diff #/ distance * speed
+                            player_pos[0] += x_move
+                            player_pos[1] += y_move
                 
                     
                     screen.fill(white)
