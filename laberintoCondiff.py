@@ -180,7 +180,7 @@ def laberinto():
                     elif check_collision(int((player_pos[1]+player_size)//filas),int((player_pos[0]+player_size*1.5)//columnas))== True and x_diff>=0:
                         player_pos[0]=aux[0]
                     else:
-                        if distance>3:
+                        if abs(x_diff)>3:
                             player_pos[0] += x_diff /distance * speed
 
                     if check_collision(int((player_pos[1]+1+player_size/2)//filas),int((player_pos[0]+player_size)//columnas))== True and y_diff<=0:
@@ -192,7 +192,7 @@ def laberinto():
                     
                         player_pos[1]=aux[1]
                     else:
-                        if distance>3:
+                        if abs(y_diff)>3:
                             player_pos[1] += y_diff /distance * speed
                     
 
