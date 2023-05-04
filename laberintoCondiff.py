@@ -23,7 +23,7 @@ def laberinto():
 
 
     # Definir variables de movimiento
-    speed = 5
+    speed = 8
 
     # Definir el laberinto
     maze = [[1,1,1,1,1,1,1,1,1,1,1,1,1],
