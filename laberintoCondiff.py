@@ -50,8 +50,6 @@ def laberinto():
 
     player_size = 15
     player_pos = [0*columnas, 7*filas+filas/2]
-    end_size = 30
-    end_pos = [width - end_size, 0]
 
     # Dibujar el laberinto
     def draw_maze():
@@ -75,32 +73,6 @@ def laberinto():
 
 
     def check_collision(i,j):
-        #return False
-        #recorremos el array para generar rectangulos y comprobar si colisiona el personaje con los rectangulos
-        #circulo_rect = pygame.Rect(target_pos[0]+player_size/2, target_pos[1]+player_size/2, player_size, player_size)
-        #circulo2_rect = pygame.Rect(player_pos[0]+player_size/2, player_pos[1]+player_size/2, player_size, player_size)
-        
-        #if (circulo2_rect.colliderect(circulo_rect)==False):
-        #    print('a')
-        #    return True
-        """ for i in range(len(maze)):
-            for j in range(len(maze[i])):
-                if maze[i][j] == 1:
-                    #creamos un rectangulo en la posicion del muro para comprobar la colision
-                    wall_rect = pygame.Rect(j*columnas, i*filas, columnas+1, filas+1)
-                    #creamos un cuadrado en la posicion del personaje
-                    #comprobamos si chocan el rectangulo con el cuadrado
-                    if wall_rect.colliderect(circulo_rect):
-                        print('b')
-                        return True
-                    #comprobamos si nos chocamos con el cuadrado final para que acabe el bucle
-                if maze[i][j] == 2:
-                    wall_rect = pygame.Rect(j*columnas, i*filas, columnas, filas)
-                    if wall_rect.collidepoint(player_pos):
-                         return "WIN"
-        #else:
-        #    return True
-                """
         if maze[i][j]==1:
             return True
        
@@ -108,10 +80,6 @@ def laberinto():
             return "WIN"
         else:
             return False
-        """if (circulo2_rect.colliderect(circulo_rect)==True):
-            return False
-        else:
-            return True"""
 
 
 
@@ -169,12 +137,9 @@ def laberinto():
                     #comprobamos si hay colision, si hay colision con un muro no se actualiza la posicion del personaje
                     #si colisiona con el cuadrado de salida del laberinto acaba el programa
                     #y si no colisiona actualiza la posicion del personaje
-                    j_mause=int(player_pos[0]//columnas)
-                    i_mause=int(player_pos[1]//filas)
                     x_diff = target_pos[0] - player_pos[0]
                     y_diff = target_pos[1] - player_pos[1]
                     
-                    distance=(x_diff**2+y_diff**2)**(0.5)
 
                     #control para no pegar saltos gigantes
                     if abs(x_diff)>columnas or abs(y_diff)>filas:
@@ -184,26 +149,6 @@ def laberinto():
                         
 
                     #control movimiento bola en x, en y o en ambas dimensiones
-                    """
-                    player_pos_aux=[player_pos[0]+x_diff,player_pos[1]+ y_diff]
-                    x=int(player_pos_aux[0]//columnas)
-                    y=int(player_pos_aux[1]//filas)
-                    col=maze[y][x]
-                    #col= check_collision(int((player_pos_aux[0])//filas),int((player_pos_aux[1])//columnas))
-                    if (col==1):
-                        player_pos_aux=[player_pos[0]+x_diff,player_pos[1]]
-                        x=int(player_pos_aux[0]//columnas)
-                        y=int(player_pos_aux[1]//filas)
-                        col=maze[y][x]
-                        if (col==1):
-                            player_pos_aux=[player_pos[0]+x_diff,player_pos[1]]
-                            x=int(player_pos_aux[0]//columnas)
-                            y=int(player_pos_aux[1]//filas)
-                            col=maze[y][x]
-                            if (col==1):
-                                player_pos=player_pos_aux
-
-                    """
 
                     if check_collision(int((player_pos[1]+player_size)//filas),int((player_pos[0]-1+player_size/2)//columnas))== True and x_diff<=0:
 
@@ -213,7 +158,7 @@ def laberinto():
                         player_pos[0]=aux[0]
                     else:
                         if abs(x_diff)>0:
-                            player_pos[0] += x_diff # /distance * speed
+                            player_pos[0] += x_diff 
 
                     if check_collision(int((player_pos[1]+1+player_size/2)//filas),int((player_pos[0]+player_size)//columnas))== True and y_diff<=0:
 
@@ -225,39 +170,8 @@ def laberinto():
                         player_pos[1]=aux[1]
                     else:
                         if abs(y_diff)>0:
-                            player_pos[1] += y_diff # /distance * speed
-                    
-
-
-
-                    """
-                    elif check_collision(int((player_pos[1]+7)//filas),int((player_pos[0])//columnas)) == True and x_diff>=0:
-                        print(2)
-                        player_pos[0]=aux[0]
-                    else:
-                        player_pos[0] += x_diff
-                        print(3)
-
-                    if check_collision(int((player_pos[1])//filas),int((player_pos[0]-1)//columnas)) == True and y_diff<0:
-                        player_pos[1]=aux[1]
-             
-                    elif check_collision(int((player_pos[1])//filas),int((player_pos[0]+1)//columnas)) == True and y_diff>0:
-                        player_pos[1]=aux[1]
-                    else:
-                        player_pos[1] += y_diff
-                    """
-                   # player_pos[1] += y_diff
-                    
-                    """else:
-                        x_diff = target_pos[0] - player_pos[0]
-                        y_diff = target_pos[1] - player_pos[1]
-                        distance=1
-                        if distance != 0:
-                            x_move = x_diff #/ distance * speed
-                            y_move = y_diff #/ distance * speed
-                            player_pos[0] += x_move
-                            player_pos[1] += y_move
-                            #-----------------------------------------------------------------------------------------------------------------
+                            player_pos[1] += y_diff
+                #-----------------------------------------------------------------------------------------------------------------
                 #si el tiempo actual - el tiempo de la ultima vez que se ha optenido un dato es igual o mayor que el intervalo captura
                 #el dato y reinicia el tiempo """
                     if pygame.time.get_ticks()-tiempo_intervalo>=intervalo:
