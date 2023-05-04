@@ -23,7 +23,7 @@ def laberinto():
 
 
     # Definir variables de movimiento
-    speed = 8
+    speed = 5
 
     # Definir el laberinto
     maze = [[1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -131,6 +131,9 @@ def laberinto():
     while not game_over:
         # Manejo de eventos
         for event in pygame.event.get():
+            if check_collision(int((player_pos[1]+player_size)//filas),int((player_pos[0]+player_size)//columnas)) == "WIN":
+                        print("¡Ganaste!")
+                        game_over = True
             #acaba el programa si cerramos la ventana
             if event.type == pygame.QUIT:
                 game_over = True
@@ -138,25 +141,26 @@ def laberinto():
             if mover==False:
                 #coge la posicion del raton 
                 mouse_pos = pygame.mouse.get_pos()
-                #recorremos el array para comprobar si "colisionamos con el cuadrado de entrada al laberinto
-                if maze[7][0] == 3:
-                    wall_rect = pygame.Rect(0*columnas, 7*filas, columnas, filas)
-                    #comprobamos si la posicion del raton colisiona con el cuadrado de salida
-                    if wall_rect.collidepoint(mouse_pos):
-                        #-------------------------------------------------------------------------------------------------
-                        #guardamos el tiempo especifico para guardar nuestros datos
-                        tiempo_intervalo=pygame.time.get_ticks()
-                        #-------------------------------------------------------------------------------------------------
-                        #cambiamos la variable mover para que se pueda mover el personaje
-                        mover=True
+                #creamos el cuadrado de entrada al laberinto y comprobamos si el raton choca con el cuadrado
+                wall_rect = pygame.Rect(0*columnas, 7*filas, columnas, filas)
+                #comprobamos si la posicion del raton colisiona con el cuadrado de salida
+                if wall_rect.collidepoint(mouse_pos):
+                    #-------------------------------------------------------------------------------------------------
+                    #guardamos el tiempo especifico para guardar nuestros datos
+                    tiempo_intervalo=pygame.time.get_ticks()
+                    #-------------------------------------------------------------------------------------------------
+                    #cambiamos la variable mover para que se pueda mover el personaje
+                    mover=True
             else:
                 #coge la posicion del raton 
                 
                 mouse_pos = pygame.mouse.get_pos()
                 
                 
-                target_pos = [mouse_pos[0]-player_size, mouse_pos[1]-player_size]
+                #target_pos = [mouse_pos[0]-player_size, mouse_pos[1]-player_size]
 
+                target_pos = [mouse_pos[0]-player_size, mouse_pos[1]-player_size]
+                
                 # Actualizar posición del personaje
                 if target_pos is not None:
                     #guardamos la posicion del personaje en una variable auxiliar 
@@ -172,7 +176,38 @@ def laberinto():
                     i_mause=int(player_pos[1]//filas)
                     x_diff = target_pos[0] - player_pos[0]
                     y_diff = target_pos[1] - player_pos[1]
+                    
                     distance=(x_diff**2+y_diff**2)**(0.5)
+
+                    #control para no pegar saltos gigantes
+                    if abs(x_diff)>columnas or abs(y_diff)>filas:
+                        x_diff=0
+                        y_diff=0
+                    
+                        
+
+                    #control movimiento bola en x, en y o en ambas dimensiones
+                    """
+                    player_pos_aux=[player_pos[0]+x_diff,player_pos[1]+ y_diff]
+                    x=int(player_pos_aux[0]//columnas)
+                    y=int(player_pos_aux[1]//filas)
+                    col=maze[y][x]
+                    #col= check_collision(int((player_pos_aux[0])//filas),int((player_pos_aux[1])//columnas))
+                    if (col==1):
+                        player_pos_aux=[player_pos[0]+x_diff,player_pos[1]]
+                        x=int(player_pos_aux[0]//columnas)
+                        y=int(player_pos_aux[1]//filas)
+                        col=maze[y][x]
+                        if (col==1):
+                            player_pos_aux=[player_pos[0]+x_diff,player_pos[1]]
+                            x=int(player_pos_aux[0]//columnas)
+                            y=int(player_pos_aux[1]//filas)
+                            col=maze[y][x]
+                            if (col==1):
+                                player_pos=player_pos_aux
+
+                    """
+
                     if check_collision(int((player_pos[1]+player_size)//filas),int((player_pos[0]-1+player_size/2)//columnas))== True and x_diff<=0:
 
                     
@@ -180,8 +215,8 @@ def laberinto():
                     elif check_collision(int((player_pos[1]+player_size)//filas),int((player_pos[0]+player_size*1.5)//columnas))== True and x_diff>=0:
                         player_pos[0]=aux[0]
                     else:
-                        if abs(x_diff)>3:
-                            player_pos[0] += x_diff /distance * speed
+                        if abs(x_diff)>0:
+                            player_pos[0] += x_diff # /distance * speed
 
                     if check_collision(int((player_pos[1]+1+player_size/2)//filas),int((player_pos[0]+player_size)//columnas))== True and y_diff<=0:
 
@@ -192,8 +227,8 @@ def laberinto():
                     
                         player_pos[1]=aux[1]
                     else:
-                        if abs(y_diff)>3:
-                            player_pos[1] += y_diff /distance * speed
+                        if abs(y_diff)>0:
+                            player_pos[1] += y_diff # /distance * speed
                     
 
 
@@ -212,11 +247,10 @@ def laberinto():
                     elif check_collision(int((player_pos[1])//filas),int((player_pos[0]+1)//columnas)) == True and y_diff>0:
                         player_pos[1]=aux[1]
                     else:
-                        player_pos[1] += y_diff"""
+                        player_pos[1] += y_diff
+                    """
                    # player_pos[1] += y_diff
-                    if check_collision(int((player_pos[1]+player_size/2)//filas),int((player_pos[0]+player_size)//columnas)) == "WIN":
-                        print("¡Ganaste!")
-                        game_over = True
+                    
                     """else:
                         x_diff = target_pos[0] - player_pos[0]
                         y_diff = target_pos[1] - player_pos[1]
@@ -258,5 +292,3 @@ if __name__ == "__main__":
     print(len(Datos))
     print(Datos)
     np.save('datos2/1.npy', Datos)
-
-
