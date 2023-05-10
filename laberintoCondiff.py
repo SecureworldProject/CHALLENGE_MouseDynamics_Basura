@@ -86,6 +86,7 @@ def laberinto():
 
     # Loop principal del juego
     game_over = False
+    relojPrincipal=pygame.time.Clock()
     #creamos una variable que nos impida movernos hasta que lleguemos al cuadrado de la salida
     mover=False
     #pintamos todos los elementos 
@@ -95,7 +96,10 @@ def laberinto():
     pygame.display.update()
     while not game_over:
         # Manejo de eventos
+        no_hay_evento=True
+        relojPrincipal.tick(60)
         for event in pygame.event.get():
+            no_hay_evento=False
             if check_collision(int((player_pos[1]+player_size)//filas),int((player_pos[0]+player_size)//columnas)) == "WIN":
                         print("¡Ganaste!")
                         game_over = True
@@ -189,9 +193,12 @@ def laberinto():
 
 
                 # Dibujar elementos en pantalla
-        
+            
             pygame.display.update()
-
+        if no_hay_evento and mover:
+            tiempo_intervalo=pygame.time.get_ticks()
+            datos.append([mouse_pos[0],mouse_pos[1]])
+            print(tiempo_intervalo)
     # Cerrar Pygame
     pygame.quit()
     return datos
@@ -199,7 +206,10 @@ def laberinto():
 
 #ver que hacer con los datos y que devuelva los datos
 if __name__ == "__main__":
+    import time
     Datos=laberinto()
     print(len(Datos))
     print(Datos)
-    np.save('datos2/1.npy', Datos)
+    milis= round((time.time() * 1000)) %1000
+    #np.save('datos2/1.npy', Datos)
+    np.save("datos3/izquierda"+str(milis)+".npy", Datos)
