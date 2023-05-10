@@ -4,7 +4,7 @@ import os
 import numpy as np
 from tensorflow import keras
 
-from laberinto import laberinto
+from laberintoCondiff import laberinto
 
 props_dict = {}
 DEBUG_MODE = True

@@ -209,6 +209,6 @@ if __name__ == "__main__":
     Datos=laberinto()
     print(len(Datos))
     print(Datos)
-    np.save('datos2/1.npy', Datos)
+    np.save('datos2/18.npy', Datos)
 
 
