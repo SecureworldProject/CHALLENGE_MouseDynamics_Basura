@@ -198,7 +198,7 @@ def laberinto():
         if no_hay_evento and mover:
             tiempo_intervalo=pygame.time.get_ticks()
             datos.append([mouse_pos[0],mouse_pos[1]])
-            print(tiempo_intervalo)
+            #print(tiempo_intervalo)
     # Cerrar Pygame
     pygame.quit()
     return datos
